@@ -63,10 +63,20 @@ h1{
 .check:checked ~ .front {
     transform           :rotateY(180deg);
 }
+
 .check:checked ~ .back {
     transform           :rotateY(0deg);
 }
 
 input{
     display: none;
+}
+
+
+div[data-state = "red"] {
+    background          : red;
+}
+
+div[data-state = "green"] {
+    background          : green;
 }

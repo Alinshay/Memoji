@@ -1,14 +1,101 @@
 
 body {
     background: #cfd0cf;
+
 }
+
+
 
 .game{
     z-index: 1;
     background: #cfd0cf;
-    width: 680px;
+    width: 650px;
+    padding-left: 30px;
+    padding-top: 20px;
     margin: 0 auto;
     perspective: 600px;
+    position: relative;
+}
+
+.message{
+    z-index: 3;
+    position: absolute;
+    display: inline-block;
+    background: #fff;
+    width: 30%;
+    height: 30%;
+    top:50%; left: 50%;
+    margin: -10% 0 0 -15%;
+
+}
+
+.message h2{
+    position: absolute;
+    left: 40%;
+    top: 5%;
+    font: 30px Arial;
+    animation: loader 2s linear infinite;
+    color: #434344;
+    margin: 40px auto;
+    text-align: center;
+
+}
+
+@keyframes loader {
+
+    50% {
+
+        font-size: 45px;
+    }
+
+    100% {
+        font-size: 30px;
+    }
+}
+
+
+.message button{
+    box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+    background: linear-gradient(to top right, #22ab93, #19668d);
+    border: 0;
+    width: 200px;
+    height: 50px;
+    font:  24px Arial;
+    color: white;
+    margin: 130px 100px;
+}
+
+.message button:active
+{
+    box-shadow: 2px 1px 8px inset rgba(0,0,0,0.5);
+}
+
+
+#dark{
+    z-index: 2;
+    background: black;
+    opacity: 0.3;
+    position:absolute;
+    top: -10%;
+    left: -5%;
+    width: 105%;
+    height: 110%;
+}
+
+.message[data-state = "yes"] {
+    display: inline-block;
+}
+
+#dark[data-state = "yes"] {
+    display: block;
+}
+
+#dark[data-state="no"]{
+    display: none;
+}
+
+.message[data-state = "no"] {
+    display: none;
 }
 
 h1{
@@ -80,31 +167,3 @@ div[data-state = "green"] {
 
 
 
-/*анимация*/
-.animation {
-    z-index: 2;
-    position: absolute;
-    top: -1%;
-    left: 40%;
-    font-size: 30px;
-    animation: loader 2s linear;
-
-}
-
-@keyframes loader {
-
-    50% {
-        top: 500px;
-        left: 20%;
-        font-size: 45px;
-    }
-
-    100% {
-        left: 0%;
-        top: 1000px;
-        font-size: 60px;
-    }
-}
-
-    
-}

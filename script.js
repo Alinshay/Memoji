@@ -13,8 +13,11 @@ function random() {
 }
 
 
+var vic =0;
 
 function logic(){
+
+
 
     var card = document.querySelectorAll('.front ');
     for(var i=0; i<card.length; i++) {
@@ -24,10 +27,9 @@ function logic(){
 
 
 
-
     function click()
     {
-        var backs = document.querySelectorAll('.back ');
+        backs = document.querySelectorAll('.back ');
         //проверка не все ли зеленые?
 
 
@@ -49,10 +51,18 @@ function logic(){
                         backs[i].dataset.state = 'green';
                         //backs[i].previousElementSibling.previousElementSibling.setAttribute('checked', true);
                         //backs[i].previousElementSibling.previousElementSibling.setAttribute('disabled', true);
-
-
                         //disabled checked
                         //блокируются
+
+
+                        vic=1;var green =0;
+                        for(var i=0; i<backs.length; i++) {
+                            if (backs[i].dataset.state!= 'green')
+                                green+=1;
+                        }
+                        if(green==0)
+                        {document.getElementById('win').setAttribute('data-state', 'yes');
+                        document.getElementById('dark').setAttribute('data-state', 'yes');}
 
                     }
 
@@ -73,8 +83,6 @@ function logic(){
 
 
             }
-
-
 
 
                         if(op==0) {
@@ -104,22 +112,37 @@ function logic(){
 
     }
 
-    /*
-    var green =0;
-        for(var i=0; i<backs.length; i++) {
-            if (backs[i].dataset.state!= 'green')
-                green+=1;
-        }
-        if(green==0)
-            alert('ура!');
-     */
+
+
+
+
 
 }
 
-function animation(){
+function again(){
+    document.getElementById('win').setAttribute('data-state', 'no');
+    document.getElementById('dark').setAttribute('data-state', 'no');
+    /*СДЕЛАТЬ ЦИКЛ!*/
+    document.getElementById('check1').click();
+    document.getElementById('check2').click();
+    document.getElementById('check3').click();
+    document.getElementById('check4').click();
+    document.getElementById('check5').click();
+    document.getElementById('check6').click();
+    document.getElementById('check7').click();
+    document.getElementById('check8').click();
+    document.getElementById('check9').click();
+    document.getElementById('check10').click();
+    document.getElementById('check11').click();
+    document.getElementById('check12').click();
 
 
 }
+
+//сделать, чтобы класс карточки запоминал и input, и back, и front
+
 
 //TODO
-//закрывать самим
+//нельза кликать на уже открытую, зеленую или красную
+//alert в случае победы и кнопка перезапуска
+//таймер и alert в случае поражения

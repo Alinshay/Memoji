@@ -165,5 +165,14 @@ div[data-state = "green"] {
     background          : #4cae4c;
 }
 
+div[data-state = "close"] {
+    background          : #fff;
+}
 
 
+
+#time{
+    margin: 30px 40%;
+    color: #000;
+    font: 38px Arial;
+}

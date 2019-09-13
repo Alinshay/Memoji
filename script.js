@@ -1,5 +1,7 @@
 
 
+var N=12; //кол-во карточек
+
 function random() {
     var mas = ['🐭', '🐭', '🐸', '🐸', '🐱', '🐱', '🐷', '🐷', '🐶', '🐶', '🐵', '🐵'];
 
@@ -10,22 +12,48 @@ function random() {
     var collection = document.querySelectorAll('.back ');
     for (var i = 0; i < collection.length; i++)
     {collection[i].innerHTML = mas[i];
-     collection[i].setAttribute('data-state','close');}
+        collection[i].setAttribute('data-state','close');}
+}
+
+//сделать класс таймер?
+function Card(id)
+{
+    this.check = document.getElementById(id);
+    this.front = document.getElementById(id).nextElementSibling;
+    this.back = document.getElementById(id).nextElementSibling.nextElementSibling;
+    this.state = document.getElementById(id).nextElementSibling.nextElementSibling.getAttribute('data-state');
+    this.pic = document.getElementById(id).nextElementSibling.nextElementSibling.innerHTML;
+
+
+    this.reload = function () {
+        this.pic = document.getElementById(id).nextElementSibling.nextElementSibling.innerHTML;
+    }
+
+
+    this.change = function (str) {
+        if((str==='open')||(str==='red')||(str==='green')){
+        document.getElementById(id).nextElementSibling.nextElementSibling.setAttribute('data-state', str);
+        this.state = document.getElementById(id).nextElementSibling.nextElementSibling.getAttribute('data-state');
+        document.getElementById(id).parentElement.classList.add('dis');}
+        if(str==='close')
+        {
+            document.getElementById(id).parentElement.classList.remove('dis');
+        }
+    }
+
+    this.flip = function(){
+        this.back.click();//сделать что-то более здоровое
+        document.getElementById(id).nextElementSibling.nextElementSibling.setAttribute('data-state', 'close');
+        this.state = document.getElementById(id).nextElementSibling.nextElementSibling.getAttribute('data-state');
+        this.change('close');
+    }
+
 }
 
 
-var vic =0;
-
-
-
 function logic() {
-
-    //начинать все сначала
-    //random();
-
-
-    var time = 60;
-    var interval = setInterval(function () {
+    var time = 60; //время одной игры
+    function timer(){
         if (time > 0) {
             time = time - 1;
             if (time > 9) {
@@ -41,86 +69,70 @@ function logic() {
             document.getElementById('dark').setAttribute('data-state', 'yes');
             clearInterval(interval);
         }
-    }, 1000);
-
-
-    var card = document.querySelectorAll('.front ');
-    for (var i = 0; i < card.length; i++) {
-
-        card[i].addEventListener('click', click, true);
     }
 
-
-    function click() {
-        backs = document.querySelectorAll('.back ');
-
-        //поменять на что-то более норм
-        var op = 0;
-        top:
-            for (var i = 0; i < backs.length; i++) {
-
-                if (backs[i].dataset.state == 'open') {
-                    op = 1;
-
-                    if (backs[i].innerHTML == this.nextElementSibling.innerHTML) {
-                        this.nextElementSibling.dataset.state = 'green';
-                        //this.previousElementSibling.setAttribute('checked', true);
-                        //this.previousElementSibling.setAttribute('disabled', true);
-
-                        backs[i].dataset.state = 'green';
-                        //backs[i].previousElementSibling.previousElementSibling.setAttribute('checked', true);
-                        //backs[i].previousElementSibling.previousElementSibling.setAttribute('disabled', true);
-                        //disabled checked
-                        //блокируются
+        random();
+        var card = [];//массив объектов карточек
+        for (let i = 0; i < N; i++) {
+            card.push(new Card('check' + i));
+        }
 
 
-                        vic = 1;
-                        var green = 0;
-                        for (var i = 0; i < backs.length; i++) {
-                            if (backs[i].dataset.state != 'green')
-                                green += 1;
-                        }
-                        if (green == 0) {
-                            clearInterval(interval);
-                            document.getElementById('win').setAttribute('data-state', 'yes');
-                            document.getElementById('dark').setAttribute('data-state', 'yes');
-                        }
-                        break top;
-                    } else {
-                        this.nextElementSibling.dataset.state = 'red';
-                        backs[i].dataset.state = 'red';
+        /* Работа с таймером*/
 
-                        //backs[i].previousElementSibling.previousElementSibling.setAttribute('checked', true);
-                        //backs[i].previousElementSibling.previousElementSibling.setAttribute('disabled', false);
-                        //this.previousElementSibling.setAttribute('checked', true);
-                        //this.previousElementSibling.setAttribute('disabled', false);
+        var interval = setInterval(timer, 1000);
 
-                        break top;
 
-                    }
+        /*Навешиваем обработчик событий на все карточки*/
+        var listen = document.querySelectorAll('.front');
+        for (var i = 0; i < listen.length; i++) {
+
+            listen[i].addEventListener('click', click);
+            listen[i].param = i;
+        }
+
+
+        function click(num) {
+
+            let cur = num.target.param; //индекс последней открытой карточки
+
+            let op = -1;
+
+            for (let i = 0; i < card.length; i++) {
+                if (card[i].state === 'open') {
+                    op = i;
                 }
-
-
             }
 
+            if (op === -1) {
+                card[cur].change('open');
 
-        if (op == 0) {
-            this.nextElementSibling.dataset.state = 'open';
-            //this.previousElementSibling.setAttribute('checked', true);
-            //this.previousElementSibling.setAttribute('disabled', true);
+                for (let i = 0; i < card.length; i++) {
+                    if (card[i].state === 'red')
+                        card[i].flip();
+                }
+                //находим красные и переворачиваем
+            } else {
+                if (card[cur].pic === card[op].pic) {
+                    card[cur].change('green');
+                    card[op].change('green');
 
-            var red1;
-            var red2;
-            for (var i = 0; i < backs.length; i++) {
-                if (backs[i].dataset.state == 'red') {
-                    if (red1 == undefined) {
-                        red1 = backs[i].previousElementSibling.previousElementSibling.getAttribute('id');
-                        document.getElementById(red1).click();
-                    } else {
-                        red2 = backs[i].previousElementSibling.previousElementSibling.getAttribute('id');
-                        document.getElementById(red2).click();
+
+                    let green = 0;
+                    for (let i = 0; i < card.length; i++) {
+                        if (card[i].state !== 'green')
+                            green += 1;
                     }
-                    backs[i].dataset.state = 'close';
+
+                    if (green === 0) {
+                        clearInterval(interval);
+                        document.getElementById('win').setAttribute('data-state', 'yes');
+                        document.getElementById('dark').setAttribute('data-state', 'yes');
+                    }
+
+                } else {
+                    card[cur].change('red');
+                    card[op].change('red');
                 }
             }
 
@@ -128,59 +140,41 @@ function logic() {
         }
 
 
-    }
-}
+        /*Функция перезапуска игры*/
+        var button1 = document.getElementById('again1');
+        button1.addEventListener('click', again);
 
+        var button2 = document.getElementById('again2');
+        button2.addEventListener('click', again);
 
+        function again() {
+            document.getElementById('win').setAttribute('data-state', 'no');
+            document.getElementById('lose').setAttribute('data-state', 'no');
+            document.getElementById('dark').setAttribute('data-state', 'no');
 
-function again(){
-    document.getElementById('win').setAttribute('data-state', 'no');
-    document.getElementById('lose').setAttribute('data-state', 'no');
-    document.getElementById('dark').setAttribute('data-state', 'no');
+            for (var i = 0; i < card.length; i++) {
 
-    var card = document.querySelectorAll('.check');
-    for(var i=0; i<card.length; i++) {
+                if (card[i].state !== 'close') {
+                    card[i].flip();
+                }
+            }
 
-        if(card[i].nextElementSibling.nextElementSibling.getAttribute('data-state') !='close')
-        {
-         card[i].click();
-         card[i].nextElementSibling.nextElementSibling.setAttribute('data-state','close');
+            random();
+            for(let i=0; i< card.length; i++)
+                card[i].reload();
+            clearInterval(interval);//перезапускаем таймер
+            time=60;
+            interval = setInterval(timer, 1000);
         }
-    }
-
-    logic();
 
 }
-
-
-/*
-function Card(id)
-{
-this.check = document.getElementById('id');
-this.front = document.getElementById('id').nextElementSibling;
-this.back = document.getElementById('id').nextElementSibling.nextElementSibling;
-this.pic = document.getElementById('id').nextElementSibling.nextElementSibling.innerHTML;
-}
-
-
-var mas =[];
-
-for(var i =0; i<12; i++)
-    mas.push = new Card('check'+1);
-
-alert(mas);
-}
-*/
-
-
 
 
 
 
 //TODO
-//сделать, чтобы класс карточки запоминал и input, и back, и front
 //перемешивать правильно
-//сделать верстку адаптивной
-//нельза кликать на уже открытую, зеленую или красную
+//сделать верстку адаптивной + mobile
+//сделать разные варианты поля
 
 

@@ -126,6 +126,7 @@ h1{
     border-radius: 9px;
     display: inline-block;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
+
 }
 
 
@@ -134,6 +135,8 @@ h1{
     background: linear-gradient(to top right, #22ab93, #19668d);
     backface-visibility : hidden;
     transform           : rotateY(0deg);
+
+
 }
 .back {
     background          : white;
@@ -141,6 +144,7 @@ h1{
     transform           : rotateY(180deg);
     font: 75px Arial;
     border: 0px solid white;
+
 
 }
 
@@ -166,10 +170,14 @@ div[data-state = "green"] {
 }
 
 div[data-state = "close"] {
-    background          : #fff;
+    background          : blue;
 }
 
 
+.dis
+{
+    pointer-events: none;
+}
 
 #time{
     margin: 30px 40%;

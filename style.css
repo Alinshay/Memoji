@@ -5,7 +5,6 @@ body {
 }
 
 
-
 .game{
     z-index: 1;
     background: #cfd0cf;
@@ -36,7 +35,7 @@ body {
     font: 30px Arial;
     animation: loader 2s linear infinite;
     color: #434344;
-    margin: 40px auto;
+    margin: 10% auto;
     text-align: center;
 
 }
@@ -44,7 +43,6 @@ body {
 @keyframes loader {
 
     50% {
-
         font-size: 45px;
     }
 
@@ -58,16 +56,52 @@ body {
     box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
     background: linear-gradient(to top right, #22ab93, #19668d);
     border: 0;
-    width: 200px;
-    height: 50px;
+    width: 50%;
+    height: 20%;
     font:  24px Arial;
     color: white;
-    margin: 130px 100px;
+    margin: 30% 25%;
 }
 
 .message button:active
 {
     box-shadow: 2px 1px 8px inset rgba(0,0,0,0.5);
+}
+
+
+
+@media(max-width: 1100px ){
+    .message
+    {
+        width: 50%;
+        height: 300px;
+        top:20%; left:40%;
+        margin: -10% 0 0 -15%;
+
+    }
+
+    .message button{
+        margin-top: 30%;
+        width: 50%;
+        height: 25%;
+    }
+}
+
+@media(max-width: 900px ){
+    .message
+    {
+        width: 50%;
+        height: 10%;
+        top:20%; left:40%;
+        margin: -10% 0 0 -15%;
+
+    }
+
+    .message button{
+        margin-top: 40%;
+        width: 50%;
+        height: 25%;
+    }
 }
 
 
@@ -82,6 +116,15 @@ body {
     height: 110%;
 }
 
+
+@media(max-height: 500px ){
+    #dark
+    {
+        height: 200%;
+    }
+
+}
+
 .message[data-state = "yes"] {
     display: inline-block;
 }
@@ -91,11 +134,11 @@ body {
 }
 
 #dark[data-state="no"]{
-    display: none;
+    /*display: none;*/
 }
 
 .message[data-state = "no"] {
-    display: none;
+    /*display: none;*/
 }
 
 h1{

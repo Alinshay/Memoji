@@ -134,11 +134,11 @@ body {
 }
 
 #dark[data-state="no"]{
-    /*display: none;*/
+    display: none;
 }
 
 .message[data-state = "no"] {
-    /*display: none;*/
+    display: none;
 }
 
 h1{
